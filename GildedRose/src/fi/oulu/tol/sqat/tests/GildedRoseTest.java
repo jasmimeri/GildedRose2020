@@ -2,6 +2,8 @@ package fi.oulu.tol.sqat.tests;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -10,7 +12,9 @@ import fi.oulu.tol.sqat.GildedRose;
 import fi.oulu.tol.sqat.Item;
 
 public class GildedRoseTest {
-
+	private final PrintStream standardOut = System.out;
+	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+	
 	@Test
 	public void testTheTruth() {
 		assertTrue(true);
@@ -31,8 +35,7 @@ public class GildedRoseTest {
 		//assert quality has decreased by one
 		assertEquals("Failed quality for Dexterity Vest", 19, quality);
 	}
-	
-	
+
 	@Test
 	public void skipLoop() {
 		//create an inn, add an item, and simulate one day
@@ -210,12 +213,28 @@ public class GildedRoseTest {
 		assertEquals("Sulfuras quality3 changed", 80, quality3);
 	}
 	
+
 	@Test
-	public void testMainMethod() {
+	public void testQualityUpdate() {
+		GildedRose innBase = new GildedRose();
+		innBase.setItem(new Item("+5 Dexterity Vest", 9, 19));
+		List<Item> itemsBase = innBase.getItems();
+		int qualityBase = itemsBase.get(0).getQuality();
+		
+		GildedRose.main(new String[0]);
+		List<Item> itemsNew = GildedRose.items;
+		int qualityNew = itemsNew.get(0).getQuality();
+		
+		assertEquals("Update function not working", qualityBase, qualityNew);
+	}
+	
+
+	@Test
+	public void testMainPrint() {
 		System.setOut(new PrintStream(outputStreamCaptor));
 		GildedRose.main(new String[0]);
 		assertEquals("OMGHAI!", outputStreamCaptor.toString()
 			      .trim());
 	}
-
+	
 }

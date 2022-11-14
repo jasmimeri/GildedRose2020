@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GildedRose {
 
-	private static List<Item> items = null;
+	public static List<Item> items = null;
 
 	/**
 	 * @param args
