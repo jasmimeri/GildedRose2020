@@ -212,7 +212,10 @@ public class GildedRoseTest {
 	
 	@Test
 	public void testMainMethod() {
+		System.setOut(new PrintStream(outputStreamCaptor));
 		GildedRose.main(new String[0]);
+		assertEquals("OMGHAI!", outputStreamCaptor.toString()
+			      .trim());
 	}
 
 }
