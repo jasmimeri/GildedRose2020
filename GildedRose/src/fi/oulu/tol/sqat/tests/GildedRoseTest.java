@@ -148,7 +148,7 @@ public class GildedRoseTest {
 	}
 	
 	@Test
-	public void quality_doesnt_increases_over_50() {
+	public void quality_doesnt_increase_over_50() {
 		//create an inn, add an item, and simulate one day
 		GildedRose inn = new GildedRose();
 		inn.setItem(new Item("Aged Brie", 1, 50));
